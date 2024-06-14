@@ -53,14 +53,13 @@ struct GoodTaskView: View {
                                             ZStack{
                                                 Circle()
                                                     .frame(width: 80, height: 80)
-                                                    .foregroundColor(.blue.opacity(0.1))
+                                                    .foregroundColor(.gray.opacity(0.1))
                                                 //.foregroundColor(Color(hex:"#B3E5FF"))
                                                 
-                                                Text("🔒")
+                                                Image("Lockicons")
                                                     .font(.system(size:60))
                                                     .multilineTextAlignment(.center)
                                                     .frame(height: 22, alignment: .center)
-                                                    .padding(.bottom)
                                             }
                                         }
                                         Spacer()
@@ -249,38 +248,44 @@ struct CustomProgressView: View {
 struct GridItemView: View {
     
     let goodTasks: TaskGoodData
-    
-    var body: some View {
-        VStack {
-            HStack{
-                dateBadge(date: goodTasks.taskGoodDate)
-                Spacer()
-            }
-            
-            HStack{
-                titleBadge(title: goodTasks.taskGoodTitle)
-                Spacer()
-            }
-            
-            HStack{
-                contentBadge(contents: goodTasks.taskGoodContent)
-                Spacer()
-            }
-            Spacer()
-            HStack{
-                Spacer()
-                emojiBadge()
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity, minHeight: 180)
-        .background(Color.blue.opacity(0.3))
-        .cornerRadius(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.gray.opacity(0.4), lineWidth: 2)
-        )
-    }
+       
+       // Function to generate a random color
+       func randomColor() -> Color {
+           let colors: [Color] = [.blue, .green, .red, .orange, .purple, .yellow]
+           return colors.randomElement() ?? .gray // Default to gray if no color is selected
+       }
+       
+       var body: some View {
+           VStack {
+               HStack{
+                   dateBadge(date: goodTasks.taskGoodDate)
+                   Spacer()
+               }
+               
+               HStack{
+                   titleBadge(title: goodTasks.taskGoodTitle)
+                   Spacer()
+               }
+               
+               HStack{
+                   contentBadge(contents: goodTasks.taskGoodContent)
+                   Spacer()
+               }
+               Spacer()
+               HStack{
+                   Spacer()
+                   emojiBadge()
+               }
+           }
+           .padding()
+           .frame(maxWidth: .infinity, minHeight: 180)
+           .background(randomColor().opacity(0.3)) // Apply random color here
+           .cornerRadius(10)
+           .overlay(
+               RoundedRectangle(cornerRadius: 10)
+                   .stroke(Color.gray.opacity(0.4), lineWidth: 2)
+           )
+       }
     
     // 날짜
     func dateBadge(date: Date) -> some View {
@@ -291,7 +296,7 @@ struct GridItemView: View {
         return ZStack {
             Rectangle()
                 .frame(width: 80, height: 22)
-                .foregroundColor(Color.white.opacity(0.3))
+                .foregroundColor(Color.gray.opacity(0.1))
             //.foregroundColor(Color(hex:"#B3E5FF"))
                 .cornerRadius(10)
             
@@ -327,10 +332,13 @@ struct GridItemView: View {
     
     // 축하뱃지
     func emojiBadge() -> some View {
+        let emojis = ["🎉", "❤️‍🔥", "🌟", "🐶", "🎈", "🥇", "🌺","🎁","🧸"]
+        
+        let randomEmoji = emojis.randomElement() ?? "🎉"
         
         return ZStack {
-            Text("🎉")
-                .font(.system(size:60))
+            Text(randomEmoji)
+                .font(.system(size: 60))
                 .multilineTextAlignment(.center)
                 .frame(height: 22, alignment: .center)
                 .padding(.bottom)
