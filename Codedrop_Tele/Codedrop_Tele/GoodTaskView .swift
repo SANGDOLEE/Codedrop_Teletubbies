@@ -99,11 +99,7 @@ struct ModalView: View {
     var today = Date()
     
     var body: some View {
-        
-        ZStack {
-            Color.gray
-                .edgesIgnoringSafeArea(.all) // Gray background
-            
+
             NavigationView {
                 VStack {
                     HStack {
@@ -113,6 +109,7 @@ struct ModalView: View {
                     
                     HStack{
                         Text("제목")
+                            .bold()
                             .padding()
                         
                         TextField("제목을 입력해주세요.", text: $title)
@@ -120,11 +117,19 @@ struct ModalView: View {
                             .padding(.trailing)
                     }
                     
+                    HStack{
+                        Text("내용을 입력해주세요. ")
+                        Spacer()
+                    }
+                    
                     TextEditor(text: $content)
                         .frame(height: 200)
                         .padding()
-                        .border(Color.gray, width: 1)
                         .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                        )
                     
                     HStack {
                         Button(action: {
@@ -139,7 +144,7 @@ struct ModalView: View {
                         }
                         .padding()
                     }
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: 200)
                     .frame(height: 20)
                     .padding()
                     .background(Color.blue)
@@ -158,7 +163,7 @@ struct ModalView: View {
                 })
                 //.navigationBarTitle("긍정적 작성", displayMode: .inline)
             }
-        }
+        
     }
 }
 
