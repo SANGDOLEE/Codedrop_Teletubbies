@@ -3,22 +3,10 @@ import SwiftUI
 import SwiftData
 
 struct BadTaskView: View {
-
     @Environment(\.modelContext) var modelContext
     @Query private var BadTasks: [TaskBadData]
 
     @State var showModal: Bool = false
-
-    let dummyTasks: [TaskBadData] = [
-        TaskBadData(taskBadContent: "내가 어제 밤늦게까지 만든 자료가 날아갔어. 한번 써본 덕분에 이번에는 더 깔꼬롬하게 만들수 있잖아? 이거 완전 럭키비키잖아?😄😄😄😄", taskBadDate: Date()),
-        TaskBadData(taskBadContent: "내가 어제 밤늦게까지 만든 자료가 날아갔어. 한번 써본 덕분에 이번에는 더 깔꼬롬하게 만들수 있잖아? 이거 완전 럭키비키잖아?😄😄😄😄", taskBadDate: Calendar.current.date(byAdding: .day, value: 1, to: Date())!),
-        TaskBadData(taskBadContent: "내가 어제 밤늦게까지 만든 자료가 날아갔어. 한번 써본 덕분에 이번에는 더 깔꼬롬하게 만들수 있잖아? 이거 완전 럭키비키잖아?😄😄😄😄", taskBadDate: Calendar.current.date(byAdding: .day, value: 2, to: Date())!),
-        TaskBadData(taskBadContent: "엄마에게 전화하여 잡담 및 주말 계획 논의", taskBadDate: Calendar.current.date(byAdding: .day, value: 3, to: Date())!),
-        TaskBadData(taskBadContent: "프로젝트 마일스톤 및 마감일 논의", taskBadDate: Calendar.current.date(byAdding: .day, value: 4, to: Date())!),
-        TaskBadData(taskBadContent: "책의 마지막 두 장 읽기", taskBadDate: Calendar.current.date(byAdding: .day, value: 5, to: Date())!),
-        TaskBadData(taskBadContent: "여름 휴가 여행 계획 및 조사", taskBadDate: Calendar.current.date(byAdding: .day, value: 6, to: Date())!),
-        TaskBadData(taskBadContent: "전기 및 수도 요금 지불", taskBadDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!)
-    ]
 
     var body: some View {
         NavigationStack {
@@ -32,7 +20,7 @@ struct BadTaskView: View {
 
             ZStack {
                 ScrollView {
-                    ForEach(BadTasks) { task in
+                    ForEach(BadTasks.reversed(), id: \.id) { task in
                         NavigationLink(destination: DetailBadTaskView(task: task)) {
                             VStack(alignment: .leading, spacing: 0) {
                                 Text("🍀" + task.taskBadDate.toFormattedString())
@@ -90,7 +78,7 @@ struct BadTaskView: View {
                                 .font(.system(size: 17, weight: .heavy))
                                 .padding(.horizontal, 33)
                                 .padding(.vertical, 16)
-                                .background(.blue)
+                                .background(.green)
                                 .foregroundColor(.white)
                                 .cornerRadius(30)
                         })

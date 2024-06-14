@@ -7,16 +7,18 @@
 
 import SwiftUI
 import SwiftData
+import GoogleGenerativeAI
 
 struct BadTaskWriteModalView: View {
 
     @Environment(\.modelContext) var modelContext
 
     @Binding var showModal: Bool
-
     @State private var content: String = ""
+    @State var isLoading = false
 
     var todayDate = Date()
+    @State var response: LocalizedStringKey = ""
 
     var body: some View {
         VStack {
@@ -51,17 +53,17 @@ struct BadTaskWriteModalView: View {
 
             HStack {
                 Button(action: {
-                    saveData()
-                    showModal = false
-
+                    if !isLoading {
+                        generateResponse()
+                    }
                 }) {
-                    Text("작성완료")
+                    Text(isLoading ? "로딩중..." : "작성완료")
                         .font(.system(size: 18))
                         .fontWeight(.heavy)
                         .padding(.horizontal, 50)
                         .padding(.vertical, 14)
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(Color.green)
                         .cornerRadius(30)
                 }
             }
@@ -74,7 +76,7 @@ struct BadTaskWriteModalView: View {
     }
 
     private func saveData() {
-        let newTask = TaskBadData(taskBadContent: content, taskBadDate: todayDate)
+        let newTask = TaskBadData(taskBadContent: response.toString(), taskBadDate: todayDate)
         modelContext.insert(newTask)
 
         do {
@@ -84,4 +86,32 @@ struct BadTaskWriteModalView: View {
         }
     }
 
+    func generateResponse(){
+        isLoading = true;
+        response = ""
+
+        Task {
+            do {
+                let result = try await chat.sendMessage(content)
+                isLoading = false
+                response = LocalizedStringKey(result.text ?? "No response found")
+                saveData()
+                showModal = false
+            } catch {
+                response = "Something went wrong! \n\(error.localizedDescription)"
+            }
+        }
+    }
+}
+
+extension LocalizedStringKey {
+    func toString() -> String {
+        let mirror = Mirror(reflecting: self)
+        let children = mirror.children
+        if let value = children.first(where: { $0.label == "key" })?.value as? String {
+            return value
+        } else {
+            return ""
+        }
+    }
 }
