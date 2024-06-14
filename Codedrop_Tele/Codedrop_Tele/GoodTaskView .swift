@@ -47,8 +47,40 @@ struct GoodTaskView: View {
                                         GridItemView(goodTasks: task)
                                     }
                                 } else {
-                                    Color.yellow.frame(height: 180) // 빈 화면
+                                    VStack{
+                                        Spacer()
+                                        HStack{
+                                            ZStack{
+                                                Circle()
+                                                    .frame(width: 80, height: 80)
+                                                    .foregroundColor(.blue.opacity(0.1))
+                                                //.foregroundColor(Color(hex:"#B3E5FF"))
+                                                
+                                                Text("🔒")
+                                                    .font(.system(size:60))
+                                                    .multilineTextAlignment(.center)
+                                                    .frame(height: 22, alignment: .center)
+                                                    .padding(.bottom)
+                                            }
+                                        }
+                                        Spacer()
+                                        HStack{
+                                           
+                                            Text("\(formattedDate())")
+                                        }
+                                        .padding(.bottom)
+                                    }
+                                    .frame(minHeight: 180)
+                                    .frame(maxWidth: .infinity)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.gray.opacity(0.4), lineWidth: 2)
+                                    )
                                 }
+                                //                                else {
+                                //                                    Color.yellow.frame(height:180)
+                                //                                }
+                                
                             }
                         }
                         .padding()
@@ -87,6 +119,7 @@ struct GoodTaskView: View {
                     .sheet(isPresented: self.$showModal) {
                         ModalView(progress: $progress, maxProgress: $maxProgess, showGridItemView: $showGridItemView)
                     }
+                    
                     .padding()
                 }
                 .frame(maxWidth: .infinity)
@@ -95,6 +128,11 @@ struct GoodTaskView: View {
         }
         
     }
+    func formattedDate() -> String {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "yyyy.MM.dd"
+           return dateFormatter.string(from: Date())
+       }
 }
 
 // MARK: Task 작성 모달
@@ -296,6 +334,66 @@ struct GridItemView: View {
                 .multilineTextAlignment(.center)
                 .frame(height: 22, alignment: .center)
                 .padding(.bottom)
+        }
+    }
+    
+}
+
+// MARK: Lock Cell View
+struct LockItemView: View {
+    
+    let goodTasks: TaskGoodData
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            HStack{
+                emojiBadge()
+            }
+            Spacer()
+            HStack{
+                dateBadge(date: goodTasks.taskGoodDate)
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, minHeight: 180)
+        //        .background(Color.blue.opacity(0.3))
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.gray.opacity(0.4), lineWidth: 2)
+        )
+    }
+    // 축하뱃지
+    func emojiBadge() -> some View {
+        
+        return ZStack {
+            
+            Circle()
+                .frame(width: 80, height: 80)
+                .foregroundColor(.blue.opacity(0.1))
+            //.foregroundColor(Color(hex:"#B3E5FF"))
+            
+            Text("🔒")
+                .font(.system(size:60))
+                .multilineTextAlignment(.center)
+                .frame(height: 22, alignment: .center)
+                .padding(.bottom)
+        }
+    }
+    
+    func dateBadge(date: Date) -> some View {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        let dateString = dateFormatter.string(from: date)
+        
+        return ZStack {
+            
+            Text(dateString)
+                .font(.system(size: 14))
+                .multilineTextAlignment(.center)
+                .frame(height: 22, alignment: .center)
+            
         }
     }
     
