@@ -1,14 +1,17 @@
 import SwiftUI
+import SwiftData
 
 struct GoodTaskView: View {
     
-    @State private var progress: Double = 1.0 // 프로그레스바 변수
+    @State private var progress: Double = 1.0 // 현재 프로그레스바 Value
+    @State private var maxProgess: Double = 2.0 // 언락까지 프로그레스바 Total Value
+    @State private var showModal = false // 모달 표시 여부
     
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
-                    CustomProgressView(progress: $progress)
+                    CustomProgressView(currentProgress: $progress, maxProgess: $maxProgess)
                     
                     ScrollView{
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
@@ -25,8 +28,9 @@ struct GoodTaskView: View {
                 VStack {
                     Spacer()
                     Button(action: {
-                        // 버튼 액션
-                        print("Floating Button Tapped")
+                        
+                        showModal.toggle()
+                        print("Tapped : 긍정이야기 쓰러가기")
                     }) {
                         HStack {
                             Text("긍정이야기 쓰러가기")
@@ -49,6 +53,9 @@ struct GoodTaskView: View {
                         .cornerRadius(30)
                         .shadow(radius: 10)
                     }
+                    .sheet(isPresented: self.$showModal) {
+                        ModalView()
+                    }
                     .padding()
                 }
                 .frame(maxWidth: .infinity)
@@ -58,6 +65,27 @@ struct GoodTaskView: View {
         }
     }
 }
+
+// MARK: Task 작성 뷰
+struct ModalView: View {
+    @Environment(\.presentationMode) var presentation
+    
+    var body: some View {
+        VStack {
+            Text("Modal view 등장")
+            Button(action: {
+                presentation.wrappedValue.dismiss()
+            }) {
+                Text("Modal view 닫기").bold()
+            }
+            .frame(width: 150, height: 30, alignment: .center)
+            .background(RoundedRectangle(cornerRadius: 40)) // 이 부분의 괄호를 추가해야 합니다.
+            .font(.system(size: 16))
+            .foregroundColor(Color.white)
+        }
+    }
+}
+
 
 // MARK: 리스트 Cell View
 struct GridItemView: View {
@@ -69,19 +97,19 @@ struct GridItemView: View {
                 .frame(maxWidth: .infinity, minHeight: 160)
                 .background(Color.blue)
                 .cornerRadius(10)
-                
         }
     }
 }
 
 // MARK: 프로그레스 바
 struct CustomProgressView: View {
-    @Binding var progress: Double
     
+    @Binding var currentProgress: Double
+    @Binding var maxProgess: Double
     
     var body: some View {
         VStack{
-            ProgressView(value: progress, total: 2.0)
+            ProgressView(value: currentProgress, total: maxProgess)
                 .scaleEffect(CGSize(width: 1.0, height: 3.0))
                 .padding(.top)
                 .padding(.horizontal)
