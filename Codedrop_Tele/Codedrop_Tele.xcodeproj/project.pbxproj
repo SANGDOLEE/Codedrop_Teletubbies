@@ -20,6 +20,8 @@
 		BD279C8C2C1CA6D9009BAEC8 /* AIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C8B2C1CA6D9009BAEC8 /* AIModel.swift */; };
 		BD279C8E2C1CAA39009BAEC8 /* GenerativeAI-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD279C8D2C1CAA39009BAEC8 /* GenerativeAI-Info.plist */; };
 		BD279C902C1CAC5A009BAEC8 /* AITestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C8F2C1CAC5A009BAEC8 /* AITestView.swift */; };
+		BD279C922C1CC38A009BAEC8 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C912C1CC38A009BAEC8 /* DataExtension.swift */; };
+		BD279C942C1CCB74009BAEC8 /* DetailBadTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		BD279C8B2C1CA6D9009BAEC8 /* AIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModel.swift; sourceTree = "<group>"; };
 		BD279C8D2C1CAA39009BAEC8 /* GenerativeAI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GenerativeAI-Info.plist"; sourceTree = "<group>"; };
 		BD279C8F2C1CAC5A009BAEC8 /* AITestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITestView.swift; sourceTree = "<group>"; };
+		BD279C912C1CC38A009BAEC8 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBadTaskView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +80,10 @@
 				1F3B05F22C1C74E000A0D3C5 /* TabbarControlView.swift */,
 				1F3B05FE2C1C752400A0D3C5 /* GoodTaskView .swift */,
 				1F3B06002C1C752D00A0D3C5 /* BadTaskView.swift */,
+				BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */,
 				BD279C8B2C1CA6D9009BAEC8 /* AIModel.swift */,
 				BD279C8F2C1CAC5A009BAEC8 /* AITestView.swift */,
+				BD279C912C1CC38A009BAEC8 /* DataExtension.swift */,
 				BD279C8D2C1CAA39009BAEC8 /* GenerativeAI-Info.plist */,
 				1F3B05F42C1C74E100A0D3C5 /* Assets.xcassets */,
 				1F3B05F62C1C74E100A0D3C5 /* Preview Content */,
@@ -177,9 +183,11 @@
 				1F3B06012C1C752D00A0D3C5 /* BadTaskView.swift in Sources */,
 				BD279C8C2C1CA6D9009BAEC8 /* AIModel.swift in Sources */,
 				1F3B05FF2C1C752400A0D3C5 /* GoodTaskView .swift in Sources */,
+				BD279C942C1CCB74009BAEC8 /* DetailBadTaskView.swift in Sources */,
 				1F3B05F12C1C74E000A0D3C5 /* Codedrop_TeleApp.swift in Sources */,
 				1F3B06082C1C8D9C00A0D3C5 /* ProgressData.swift in Sources */,
 				1F3B06032C1C753B00A0D3C5 /* TaskGoodData.swift in Sources */,
+				BD279C922C1CC38A009BAEC8 /* DataExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
