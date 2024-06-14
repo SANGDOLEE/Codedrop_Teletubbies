@@ -6,7 +6,7 @@ import SwiftData
 struct Codedrop_TeleApp: App {
     
     var modelContainer: ModelContainer = {
-        let schema = Schema([TaskData.self, ProgessData.self])
+        let schema = Schema([TaskGoodData.self, TaskBadData.self, ProgessData.self])
         let modelConfiguration = ModelConfiguration(schema: schema,
                                                     isStoredInMemoryOnly: false)
         

@@ -13,9 +13,10 @@
 		1F3B05F82C1C74E100A0D3C5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F3B05F72C1C74E100A0D3C5 /* Preview Assets.xcassets */; };
 		1F3B05FF2C1C752400A0D3C5 /* GoodTaskView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B05FE2C1C752400A0D3C5 /* GoodTaskView .swift */; };
 		1F3B06012C1C752D00A0D3C5 /* BadTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B06002C1C752D00A0D3C5 /* BadTaskView.swift */; };
-		1F3B06032C1C753B00A0D3C5 /* TaskData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B06022C1C753B00A0D3C5 /* TaskData.swift */; };
+		1F3B06032C1C753B00A0D3C5 /* TaskGoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B06022C1C753B00A0D3C5 /* TaskGoodData.swift */; };
 		1F3B06062C1C754C00A0D3C5 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1F3B06052C1C754C00A0D3C5 /* OpenAISwift */; };
 		1F3B06082C1C8D9C00A0D3C5 /* ProgressData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B06072C1C8D9C00A0D3C5 /* ProgressData.swift */; };
+		1F3B060A2C1CA3C900A0D3C5 /* TaskBadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B06092C1CA3C900A0D3C5 /* TaskBadData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,8 +27,9 @@
 		1F3B05F72C1C74E100A0D3C5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1F3B05FE2C1C752400A0D3C5 /* GoodTaskView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GoodTaskView .swift"; sourceTree = "<group>"; };
 		1F3B06002C1C752D00A0D3C5 /* BadTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadTaskView.swift; sourceTree = "<group>"; };
-		1F3B06022C1C753B00A0D3C5 /* TaskData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskData.swift; sourceTree = "<group>"; };
+		1F3B06022C1C753B00A0D3C5 /* TaskGoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGoodData.swift; sourceTree = "<group>"; };
 		1F3B06072C1C8D9C00A0D3C5 /* ProgressData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressData.swift; sourceTree = "<group>"; };
+		1F3B06092C1CA3C900A0D3C5 /* TaskBadData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBadData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				1F3B05F02C1C74E000A0D3C5 /* Codedrop_TeleApp.swift */,
-				1F3B06022C1C753B00A0D3C5 /* TaskData.swift */,
+				1F3B06022C1C753B00A0D3C5 /* TaskGoodData.swift */,
+				1F3B06092C1CA3C900A0D3C5 /* TaskBadData.swift */,
 				1F3B06072C1C8D9C00A0D3C5 /* ProgressData.swift */,
 				1F3B05F22C1C74E000A0D3C5 /* TabbarControlView.swift */,
 				1F3B05FE2C1C752400A0D3C5 /* GoodTaskView .swift */,
@@ -158,11 +161,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F3B05F32C1C74E000A0D3C5 /* TabbarControlView.swift in Sources */,
+				1F3B060A2C1CA3C900A0D3C5 /* TaskBadData.swift in Sources */,
 				1F3B06012C1C752D00A0D3C5 /* BadTaskView.swift in Sources */,
 				1F3B05FF2C1C752400A0D3C5 /* GoodTaskView .swift in Sources */,
 				1F3B05F12C1C74E000A0D3C5 /* Codedrop_TeleApp.swift in Sources */,
 				1F3B06082C1C8D9C00A0D3C5 /* ProgressData.swift in Sources */,
-				1F3B06032C1C753B00A0D3C5 /* TaskData.swift in Sources */,
+				1F3B06032C1C753B00A0D3C5 /* TaskGoodData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
