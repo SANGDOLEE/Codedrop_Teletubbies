@@ -2,6 +2,7 @@
 import Foundation
 import SwiftData
 
+@Model
 class TaskData: Identifiable {
     
     @Attribute(.unique) var id = UUID()
@@ -11,8 +12,7 @@ class TaskData: Identifiable {
     var taskDate: Date
     var taskState: Bool
     
-    init(id: UUID = UUID(), taskTitle: String, taskContent: String, taskDate: Date, taskState: Bool) {
-        self.id = id
+    init(taskTitle: String, taskContent: String, taskDate: Date, taskState: Bool) {
         self.taskTitle = taskTitle
         self.taskContent = taskContent
         self.taskDate = taskDate
