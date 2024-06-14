@@ -3,12 +3,16 @@ import SwiftData
 
 struct GoodTaskView: View {
     
-    @State private var progress: Double = 1.0 // 현재 프로그레스바 Value
-    @State private var maxProgess: Double = 2.0 // 언락까지 프로그레스바 Total Value
+    @State private var progress: Double = 0.0 // 현재 프로그레스바 Value
+    @State private var maxProgess: Double = 3.0 // 언락까지 프로그레스바 Total Value
     @State private var showModal = false // 모달 표시 여부
+    @State private var showGridItemView = false // GridItemView 표시 여부
     
     @Environment(\.modelContext) var modelContext
     @Query private var goodTasks: [TaskGoodData]
+    @Query private var progressData: [ProgessData]
+    
+    
     
     var body: some View {
         NavigationView {
@@ -25,7 +29,7 @@ struct GoodTaskView: View {
                         Spacer()
                     }
                     HStack {
-                        Text("1개만 더 작성해주세요!")
+                        Text("\(Int(maxProgess - progress))개만 더 작성해주세요!")
                             .font(.system(size: 24))
                             .padding(.leading)
                             .padding(.top, 2)
@@ -38,7 +42,13 @@ struct GoodTaskView: View {
                     ScrollView {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                             ForEach(goodTasks) { task in
-                                GridItemView(goodTasks: task)
+                                if showGridItemView {
+                                    ForEach(goodTasks) { task in
+                                        GridItemView(goodTasks: task)
+                                    }
+                                } else {
+                                    Color.yellow.frame(height: 180) // 빈 화면
+                                }
                             }
                         }
                         .padding()
@@ -75,15 +85,15 @@ struct GoodTaskView: View {
                         .shadow(radius: 10)
                     }
                     .sheet(isPresented: self.$showModal) {
-                        ModalView()
+                        ModalView(progress: $progress, maxProgress: $maxProgess, showGridItemView: $showGridItemView)
                     }
                     .padding()
                 }
                 .frame(maxWidth: .infinity)
                 
             }
-            // .navigationTitle("좋은 기억") // 네비게이션 제목 추가
         }
+        
     }
 }
 
@@ -92,6 +102,10 @@ struct ModalView: View {
     
     @Environment(\.presentationMode) var presentation
     @Environment(\.modelContext) var modelContext
+    
+    @Binding var progress: Double
+    @Binding var maxProgress: Double
+    @Binding var showGridItemView: Bool
     
     @State private var title: String = ""
     @State private var content: String = ""
@@ -135,7 +149,16 @@ struct ModalView: View {
                         let post = TaskGoodData(taskGoodTitle: title, taskGoodContent: content, taskGoodDate: today)
                         modelContext.insert(post)
                         
-                        presentation.wrappedValue.dismiss()
+                        // 직접 접근하여 progress 및 maxProgress 업데이트
+                        self.progress += 1.0
+                        if self.progress >= self.maxProgress {
+                            self.progress = 0.0
+                            self.showGridItemView = true
+                            self.maxProgress += 1.0
+                            
+                        }
+                        
+                        self.presentation.wrappedValue.dismiss()
                     }) {
                         Text("작성완료")
                             .font(.system(size: 18))
@@ -157,16 +180,32 @@ struct ModalView: View {
             .padding()
             .navigationBarItems(trailing:
                                     Button(action: {
-                presentation.wrappedValue.dismiss()
+                self.presentation.wrappedValue.dismiss()
             }) {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundColor(.gray)
-            })
+            }
+            )
         }
     }
 }
 
 
+
+// MARK: 프로그레스 바
+struct CustomProgressView: View {
+    
+    @Binding var currentProgress: Double
+    @Binding var maxProgess: Double
+    
+    var body: some View {
+        VStack{
+            ProgressView(value: currentProgress, total: maxProgess)
+                .scaleEffect(CGSize(width: 1.0, height: 3.0))
+                .padding()
+        }
+    }
+}
 
 // MARK: 리스트 Cell View
 struct GridItemView: View {
@@ -262,20 +301,6 @@ struct GridItemView: View {
     
 }
 
-// MARK: 프로그레스 바
-struct CustomProgressView: View {
-    
-    @Binding var currentProgress: Double
-    @Binding var maxProgess: Double
-    
-    var body: some View {
-        VStack{
-            ProgressView(value: currentProgress, total: maxProgess)
-                .scaleEffect(CGSize(width: 1.0, height: 3.0))
-                .padding()
-        }
-    }
-}
 
 extension Color {
     init(hex: String) {
