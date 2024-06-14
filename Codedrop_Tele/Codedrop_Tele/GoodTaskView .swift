@@ -4,7 +4,7 @@ import SwiftData
 struct GoodTaskView: View {
     
     @State private var progress: Double = 0.0 // 현재 프로그레스바 Value
-    @State private var maxProgess: Double = 3.0 // 언락까지 프로그레스바 Total Value
+    @State private var maxProgess: Double = 2.0 // 언락까지 프로그레스바 Total Value
     @State private var showModal = false // 모달 표시 여부
     @State private var showGridItemView = false // GridItemView 표시 여부
     
@@ -12,40 +12,43 @@ struct GoodTaskView: View {
     @Query private var goodTasks: [TaskGoodData]
     @Query private var progressData: [ProgessData]
     
-    
+    @State private var isAlertPresented = false
+    @State private var selectedTask: TaskGoodData?
     
     var body: some View {
         NavigationView {
             ZStack {
-                VStack {
-                    
-                    HStack {
-                        Text("곧 잠금이 풀려요!")
-                            .font(.system(size: 20))
-                            .fontWeight(.heavy)
-                            .padding(.leading)
-                            .padding(.top)
+                ScrollView {
+                    VStack {
                         
-                        Spacer()
-                    }
-                    HStack {
-                        Text("\(Int(maxProgess - progress))개만 더 작성해주세요!")
-                            .font(.system(size: 24))
-                            .padding(.leading)
-                            .padding(.top, 2)
+                        HStack {
+                            Text("곧 잠금이 풀려요!")
+                                .font(.system(size: 20))
+                                .fontWeight(.heavy)
+                                .padding(.leading)
+                                .padding(.top)
+                            
+                            Spacer()
+                        }
+                        HStack {
+                            Text("\(Int(maxProgess - progress))개만 더 작성해주세요!")
+                                .font(.system(size: 24))
+                                .padding(.leading)
+                                .padding(.top, 2)
+                            
+                            Spacer()
+                        }
                         
-                        Spacer()
-                    }
-                    
-                    CustomProgressView(currentProgress: $progress, maxProgess: $maxProgess)
-                    
-                    ScrollView {
+                        CustomProgressView(currentProgress: $progress, maxProgess: $maxProgess)
+                        
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                             ForEach(goodTasks) { task in
                                 if showGridItemView {
-                                    ForEach(goodTasks) { task in
-                                        GridItemView(goodTasks: task)
-                                    }
+                                    GridItemView(goodTasks: task)
+                                                                           .onTapGesture {
+                                                                               selectedTask = task
+                                                                               isAlertPresented.toggle()
+                                                                           }
                                 } else {
                                     VStack{
                                         Spacer()
@@ -64,7 +67,6 @@ struct GoodTaskView: View {
                                         }
                                         Spacer()
                                         HStack{
-                                           
                                             Text("\(formattedDate())")
                                         }
                                         .padding(.bottom)
@@ -83,56 +85,124 @@ struct GoodTaskView: View {
                             }
                         }
                         .padding()
+                        
+                        
+                        Spacer()
                     }
-                    Spacer()
                 }
-                
-                // 플로팅 버튼
-                VStack {
+                VStack(spacing: 0) {
                     Spacer()
-                    Button(action: {
-                        showModal.toggle()
-                        print("Tapped : 긍정이야기 쓰러가기")
-                    }) {
-                        HStack {
-                            Text("긍정이야기 쓰러가기")
-                                .font(.system(size: 18))
-                                .fontWeight(.heavy)
-                                .padding(.leading, 20)
+                    ZStack{
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 393, height: 160)
+                        //                            .background(
+                        //                                LinearGradient(
+                        //                                    stops: [
+                        //                                        Gradient.Stop(color: .white.opacity(0.3), location: 0.00),
+                        //                                        Gradient.Stop(color: .white, location: 1.00),
+                        //                                    ],
+                        //                                    startPoint: UnitPoint(x: 0.5, y: 0),
+                        //                                    endPoint: UnitPoint(x: 0.5, y: 0.34)
+                        //                                )
+                        //                            )
+                        
+                        Button(action: {
+                            showModal.toggle()
+                        }, label: {
+                            Text("워키비키 쓰러가기")
+                                .font(.system(size: 17, weight: .regular))
+                                .padding(.horizontal, 58)
+                                .padding(.vertical, 16)
+                                .background(Color(UIColor.systemGreen))
                                 .foregroundColor(.white)
-                            Image(systemName: "square.and.pencil")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                                .foregroundColor(.white)
-                                .clipShape(Circle())
-                                .shadow(radius: 10)
+                                .cornerRadius(30)
+                                .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5) // Shadow with offset
+                            
+                        })
+                        .padding(EdgeInsets(top: 65, leading: 50, bottom: 43, trailing: 50))
+                        .sheet(isPresented: self.$showModal) {
+                            ModalView(progress: $progress, maxProgress: $maxProgess, showGridItemView: $showGridItemView)
                         }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 20)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(30)
-                        .shadow(radius: 10)
                     }
-                    .sheet(isPresented: self.$showModal) {
-                        ModalView(progress: $progress, maxProgress: $maxProgess, showGridItemView: $showGridItemView)
-                    }
-                    
-                    .padding()
                 }
-                .frame(maxWidth: .infinity)
                 
             }
+           
         }
+        .overlay {
+            if isAlertPresented, let task = selectedTask { // Check if selectedTask is not nil
+                CustomAlertView(isPresented: $isAlertPresented, goodTasks: task)
+            }
+        }
+       // .padding(16)
         
     }
+    
     func formattedDate() -> String {
-           let dateFormatter = DateFormatter()
-           dateFormatter.dateFormat = "yyyy.MM.dd"
-           return dateFormatter.string(from: Date())
-       }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        return dateFormatter.string(from: Date())
+    }
 }
+
+// MARK: 커스텀 Alert
+struct CustomAlertView: View {
+    
+    @Binding var isPresented: Bool
+    let goodTasks: TaskGoodData
+    
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                VStack {
+                    Text("🎉")
+                        .font(.system(size: 100))
+                        .padding(.bottom, 20)
+                    
+                    
+                    Text(formattedDate(goodTasks.taskGoodDate))
+                        .padding(.bottom, 20)
+                    
+                    Text(goodTasks.taskGoodTitle)
+                        .bold()
+                        .font(.system(size: 22))
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 20)
+                    
+                    Text(goodTasks.taskGoodContent)
+                }
+                .padding(.vertical, 60)
+                
+                Button("닫기") {
+                    isPresented.toggle()
+                }
+                .bold()
+                .padding(.vertical, 20)
+                .frame(maxWidth: .infinity)
+                .background(Color(UIColor.systemGreen))
+                .foregroundColor(.white)
+                .cornerRadius(30)
+                .padding(.top, 10)
+                .padding(.bottom, 20)
+                .padding(.horizontal, 80)
+            }
+            .background(Color.white)
+            .cornerRadius(15)
+            .padding(.horizontal, 20) // Adjusted padding for a larger width
+            
+        }
+    }
+    func formattedDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        return dateFormatter.string(from: date)
+    }
+}
+
 
 // MARK: Task 작성 모달
 struct ModalView: View {
@@ -152,7 +222,8 @@ struct ModalView: View {
         NavigationView {
             VStack {
                 HStack {
-                    Text("긍정적 작성")
+                    Text("워키비키 작성")
+                        .font(.largeTitle)
                     Spacer()
                 }
                 
@@ -199,8 +270,6 @@ struct ModalView: View {
                     }) {
                         Text("작성완료")
                             .font(.system(size: 18))
-                            .fontWeight(.heavy)
-                            .padding(.leading, 20)
                             .foregroundColor(.white)
                     }
                     .padding()
@@ -208,7 +277,7 @@ struct ModalView: View {
                 .frame(maxWidth: 200)
                 .frame(height: 20)
                 .padding()
-                .background(Color.blue)
+                .background(Color(UIColor.systemGreen))
                 .cornerRadius(30)
                 .shadow(radius: 10)
                 
@@ -227,8 +296,6 @@ struct ModalView: View {
     }
 }
 
-
-
 // MARK: 프로그레스 바
 struct CustomProgressView: View {
     
@@ -238,6 +305,7 @@ struct CustomProgressView: View {
     var body: some View {
         VStack{
             ProgressView(value: currentProgress, total: maxProgess)
+                .progressViewStyle(LinearProgressViewStyle(tint: Color(UIColor.systemGreen)))
                 .scaleEffect(CGSize(width: 1.0, height: 3.0))
                 .padding()
         }
@@ -248,44 +316,44 @@ struct CustomProgressView: View {
 struct GridItemView: View {
     
     let goodTasks: TaskGoodData
-       
-       // Function to generate a random color
-       func randomColor() -> Color {
-           let colors: [Color] = [.blue, .green, .red, .orange, .purple, .yellow]
-           return colors.randomElement() ?? .gray // Default to gray if no color is selected
-       }
-       
-       var body: some View {
-           VStack {
-               HStack{
-                   dateBadge(date: goodTasks.taskGoodDate)
-                   Spacer()
-               }
-               
-               HStack{
-                   titleBadge(title: goodTasks.taskGoodTitle)
-                   Spacer()
-               }
-               
-               HStack{
-                   contentBadge(contents: goodTasks.taskGoodContent)
-                   Spacer()
-               }
-               Spacer()
-               HStack{
-                   Spacer()
-                   emojiBadge()
-               }
-           }
-           .padding()
-           .frame(maxWidth: .infinity, minHeight: 180)
-           .background(randomColor().opacity(0.3)) // Apply random color here
-           .cornerRadius(10)
-           .overlay(
-               RoundedRectangle(cornerRadius: 10)
-                   .stroke(Color.gray.opacity(0.4), lineWidth: 2)
-           )
-       }
+    
+    // Function to generate a random color
+    func randomColor() -> Color {
+        let colors: [Color] = [.blue, .green, .red, .orange, .purple, .yellow]
+        return colors.randomElement() ?? .gray // Default to gray if no color is selected
+    }
+    
+    var body: some View {
+        VStack {
+            HStack{
+                dateBadge(date: goodTasks.taskGoodDate)
+                Spacer()
+            }
+            
+            HStack{
+                titleBadge(title: goodTasks.taskGoodTitle)
+                Spacer()
+            }
+            
+            HStack{
+                contentBadge(contents: goodTasks.taskGoodContent)
+                Spacer()
+            }
+            Spacer()
+            HStack{
+                Spacer()
+                emojiBadge()
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, minHeight: 180)
+        .background(randomColor().opacity(0.3)) // Apply random color here
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.gray.opacity(0.4), lineWidth: 2)
+        )
+    }
     
     // 날짜
     func dateBadge(date: Date) -> some View {
@@ -332,12 +400,12 @@ struct GridItemView: View {
     
     // 축하뱃지
     func emojiBadge() -> some View {
-        let emojis = ["🎉", "❤️‍🔥", "🌟", "🐶", "🎈", "🥇", "🌺","🎁","🧸"]
+        //        let emojis = ["🎉", "❤️‍🔥", "🌟", "🐶", "🎈", "🥇", "🌺","🎁","🧸"]
         
-        let randomEmoji = emojis.randomElement() ?? "🎉"
+        //        let randomEmoji = emojis.randomElement() ?? "🎉"
         
         return ZStack {
-            Text(randomEmoji)
+            Text("🎉")
                 .font(.system(size: 60))
                 .multilineTextAlignment(.center)
                 .frame(height: 22, alignment: .center)
@@ -405,34 +473,6 @@ struct LockItemView: View {
         }
     }
     
-}
-
-
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3: // RGB (12-bit)
-            (a, r, g, b) = (255, (int >> 8 * 4) * 17, (int >> 4 * 4) * 17, (int) * 17)
-        case 6: // RGB (24-bit)
-            (a, r, g, b) = (255, int >> 16 * 4, int >> 8 * 4, int)
-        case 8: // ARGB (32-bit)
-            (a, r, g, b) = (int >> 24 * 4, int >> 16 * 4, int >> 8 * 4, int)
-        default:
-            (a, r, g, b) = (255, 0, 0, 0)
-        }
-        
-        self.init(
-            .sRGB,
-            red: Double(r) / 255,
-            green: Double(g) / 255,
-            blue: Double(b) / 255,
-            opacity: Double(a) / 255
-        )
-    }
 }
 
 #Preview {
