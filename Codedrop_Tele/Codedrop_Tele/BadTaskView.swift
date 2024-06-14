@@ -1,7 +1,13 @@
 
 import SwiftUI
+import SwiftData
 
 struct BadTaskView: View {
+
+    @Environment(\.modelContext) var modelContext
+    @Query private var BadTasks: [TaskBadData]
+
+    @State var showModal: Bool = false
 
     let dummyTasks: [TaskBadData] = [
         TaskBadData(taskBadContent: "내가 어제 밤늦게까지 만든 자료가 날아갔어. 한번 써본 덕분에 이번에는 더 깔꼬롬하게 만들수 있잖아? 이거 완전 럭키비키잖아?😄😄😄😄", taskBadDate: Date()),
@@ -26,7 +32,7 @@ struct BadTaskView: View {
 
             ZStack {
                 ScrollView {
-                    ForEach(dummyTasks) { task in
+                    ForEach(BadTasks) { task in
                         NavigationLink(destination: DetailBadTaskView(task: task)) {
                             VStack(alignment: .leading, spacing: 0) {
                                 Text("🍀" + task.taskBadDate.toFormattedString())
@@ -78,20 +84,23 @@ struct BadTaskView: View {
                             )
 
                         Button(action: {
-
+                            showModal = true
                         }, label: {
                             Text("오늘의 럭키비키 쓰러가기")
-                                .font(.system(size: 17, weight: .regular))
+                                .font(.system(size: 17, weight: .heavy))
                                 .padding(.horizontal, 33)
                                 .padding(.vertical, 16)
                                 .background(.blue)
                                 .foregroundColor(.white)
                                 .cornerRadius(30)
-
                         })
+                        .shadow(radius: 10)
                         .padding(EdgeInsets(top: 65, leading: 77, bottom: 43, trailing: 77))
                     }
+
                 }
+            }.sheet(isPresented: self.$showModal) {
+                BadTaskWriteModalView(showModal: $showModal)
             }
         }
         .padding(16)

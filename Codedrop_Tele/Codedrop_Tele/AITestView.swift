@@ -20,6 +20,7 @@ struct AITestView: View {
                 .foregroundStyle(.indigo)
                 .fontWeight(.bold)
                 .padding(.top, 40)
+            
             ZStack{
                 ScrollView{
                     Text(response)
