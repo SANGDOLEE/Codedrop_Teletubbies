@@ -111,13 +111,14 @@ struct GoodTaskView: View {
                             showModal.toggle()
                         }, label: {
                             Text("워키비키 쓰러가기")
-                                .font(.system(size: 17, weight: .regular))
+                                .font(.system(size: 17, weight: .heavy))
                                 .padding(.horizontal, 58)
                                 .padding(.vertical, 16)
                                 .background(Color(UIColor.systemGreen))
                                 .foregroundColor(.white)
                                 .cornerRadius(30)
-                                .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5) // Shadow with offset
+                                .shadow(radius: 10)
+//                                .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5) // Shadow with offset
                             
                         })
                         .padding(EdgeInsets(top: 65, leading: 50, bottom: 43, trailing: 50))
@@ -135,7 +136,7 @@ struct GoodTaskView: View {
                 CustomAlertView(isPresented: $isAlertPresented, goodTasks: task)
             }
         }
-       // .padding(16)
+        .padding(16)
         
     }
     
@@ -269,7 +270,7 @@ struct ModalView: View {
                         self.presentation.wrappedValue.dismiss()
                     }) {
                         Text("작성완료")
-                            .font(.system(size: 18))
+                            .font(.system(size: 17, weight: .heavy))
                             .foregroundColor(.white)
                     }
                     .padding()
