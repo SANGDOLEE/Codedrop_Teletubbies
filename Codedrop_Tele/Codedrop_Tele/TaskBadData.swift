@@ -12,8 +12,7 @@ class TaskBadData: Identifiable {
     var taskBadDate: Date
     
    
-    init(id: UUID = UUID(), taskBadTitle: String, taskBadContent: String, taskBadDate: Date) {
-        self.id = id
+    init(taskBadTitle: String, taskBadContent: String, taskBadDate: Date) {
         self.taskBadTitle = taskBadTitle
         self.taskBadContent = taskBadContent
         self.taskBadDate = taskBadDate
