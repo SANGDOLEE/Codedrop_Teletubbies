@@ -18,41 +18,37 @@ struct GoodTaskView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                
-                VStack {
-                    
-                    HStack {
-                        Text("곧 잠금이 풀려요!")
-                            .font(.system(size: 20))
-                            .fontWeight(.heavy)
-                            .padding(.leading)
-                            .padding(.top)
+                ScrollView {
+                    VStack {
                         
-                        Spacer()
-                    }
-                    HStack {
-                        Text("\(Int(maxProgess - progress))개만 더 작성해주세요!")
-                            .font(.system(size: 24))
-                            .padding(.leading)
-                            .padding(.top, 2)
+                        HStack {
+                            Text("곧 잠금이 풀려요!")
+                                .font(.system(size: 20))
+                                .fontWeight(.heavy)
+                                .padding(.leading)
+                                .padding(.top)
+                            
+                            Spacer()
+                        }
+                        HStack {
+                            Text("\(Int(maxProgess - progress))개만 더 작성해주세요!")
+                                .font(.system(size: 24))
+                                .padding(.leading)
+                                .padding(.top, 2)
+                            
+                            Spacer()
+                        }
                         
-                        Spacer()
-                    }
-                    
-                    CustomProgressView(currentProgress: $progress, maxProgess: $maxProgess)
-                    
-                    ScrollView {
+                        CustomProgressView(currentProgress: $progress, maxProgess: $maxProgess)
+                        
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                             ForEach(goodTasks) { task in
                                 if showGridItemView {
-                                    ForEach(goodTasks) { task in
-                                        GridItemView(goodTasks: task)
-                                            .onTapGesture {
-                                                selectedTask = task
-                                                isAlertPresented.toggle()
-                                            }
-                                        
-                                    }
+                                    GridItemView(goodTasks: task)
+                                                                           .onTapGesture {
+                                                                               selectedTask = task
+                                                                               isAlertPresented.toggle()
+                                                                           }
                                 } else {
                                     VStack{
                                         Spacer()
@@ -89,11 +85,11 @@ struct GoodTaskView: View {
                             }
                         }
                         .padding()
+                        
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
                 }
-                
                 VStack(spacing: 0) {
                     Spacer()
                     ZStack{
@@ -118,7 +114,7 @@ struct GoodTaskView: View {
                                 .font(.system(size: 17, weight: .regular))
                                 .padding(.horizontal, 58)
                                 .padding(.vertical, 16)
-                                .background(.blue)
+                                .background(Color(UIColor.systemGreen))
                                 .foregroundColor(.white)
                                 .cornerRadius(30)
                                 .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5) // Shadow with offset
@@ -187,7 +183,7 @@ struct CustomAlertView: View {
                 .bold()
                 .padding(.vertical, 20)
                 .frame(maxWidth: .infinity)
-                .background(Color.blue)
+                .background(Color(UIColor.systemGreen))
                 .foregroundColor(.white)
                 .cornerRadius(30)
                 .padding(.top, 10)
@@ -281,7 +277,7 @@ struct ModalView: View {
                 .frame(maxWidth: 200)
                 .frame(height: 20)
                 .padding()
-                .background(Color.blue)
+                .background(Color(UIColor.systemGreen))
                 .cornerRadius(30)
                 .shadow(radius: 10)
                 
@@ -300,8 +296,6 @@ struct ModalView: View {
     }
 }
 
-
-
 // MARK: 프로그레스 바
 struct CustomProgressView: View {
     
@@ -311,6 +305,7 @@ struct CustomProgressView: View {
     var body: some View {
         VStack{
             ProgressView(value: currentProgress, total: maxProgess)
+                .progressViewStyle(LinearProgressViewStyle(tint: Color(UIColor.systemGreen)))
                 .scaleEffect(CGSize(width: 1.0, height: 3.0))
                 .padding()
         }
