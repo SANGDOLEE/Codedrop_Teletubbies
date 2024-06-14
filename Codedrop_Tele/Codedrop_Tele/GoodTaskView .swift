@@ -8,14 +8,14 @@ struct GoodTaskView: View {
     @State private var showModal = false // 모달 표시 여부
     
     @Environment(\.modelContext) var modelContext
-    @Query var goodTasks: [TaskGoodData]
+    @Query private var goodTasks: [TaskGoodData]
     
     var body: some View {
         NavigationView {
             ZStack {
                 VStack {
                     
-                    HStack{
+                    HStack {
                         Text("곧 잠금이 풀려요!")
                             .font(.system(size: 20))
                             .fontWeight(.heavy)
@@ -24,7 +24,7 @@ struct GoodTaskView: View {
                         
                         Spacer()
                     }
-                    HStack{
+                    HStack {
                         Text("1개만 더 작성해주세요!")
                             .font(.system(size: 24))
                             .padding(.leading)
@@ -35,10 +35,10 @@ struct GoodTaskView: View {
                     
                     CustomProgressView(currentProgress: $progress, maxProgess: $maxProgess)
                     
-                    ScrollView{
+                    ScrollView {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                            ForEach(1...4, id: \.self) { index in
-                                GridItemView(index: index)
+                            ForEach(goodTasks) { task in
+                                GridItemView(goodTasks: task)
                             }
                         }
                         .padding()
@@ -91,7 +91,6 @@ struct GoodTaskView: View {
 struct ModalView: View {
     
     @Environment(\.presentationMode) var presentation
-    
     @Environment(\.modelContext) var modelContext
     
     @State private var title: String = ""
@@ -99,96 +98,95 @@ struct ModalView: View {
     var today = Date()
     
     var body: some View {
-
-            NavigationView {
-                VStack {
-                    HStack {
-                        Text("긍정적 작성")
-                        Spacer()
-                    }
-                    
-                    HStack{
-                        Text("제목")
-                            .bold()
-                            .padding()
-                        
-                        TextField("제목을 입력해주세요.", text: $title)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.trailing)
-                    }
-                    
-                    HStack{
-                        Text("내용을 입력해주세요. ")
-                        Spacer()
-                    }
-                    
-                    TextEditor(text: $content)
-                        .frame(height: 200)
-                        .padding()
-                        .cornerRadius(8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                        )
-                    
-                    HStack {
-                        Button(action: {
-                            // 저장 액션 등 필요한 로직 구현
-                            presentation.wrappedValue.dismiss()
-                        }) {
-                            Text("작성완료")
-                                .font(.system(size: 18))
-                                .fontWeight(.heavy)
-                                .padding(.leading, 20)
-                                .foregroundColor(.white)
-                        }
-                        .padding()
-                    }
-                    .frame(maxWidth: 200)
-                    .frame(height: 20)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(30)
-                    .shadow(radius: 10)
-                    
+        NavigationView {
+            VStack {
+                HStack {
+                    Text("긍정적 작성")
                     Spacer()
                 }
+                
+                HStack {
+                    Text("제목")
+                        .bold()
+                        .padding()
+                    
+                    TextField("제목을 입력해주세요.", text: $title)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.trailing)
+                }
+                
+                HStack {
+                    Text("내용을 입력해주세요. ")
+                    Spacer()
+                }
+                
+                TextEditor(text: $content)
+                    .frame(height: 200)
+                    .padding()
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                    )
+                
+                HStack {
+                    Button(action: {
+                        // 저장 액션 등 필요한 로직 구현
+                        let post = TaskGoodData(taskGoodTitle: title, taskGoodContent: content, taskGoodDate: today)
+                        modelContext.insert(post)
+                        
+                        presentation.wrappedValue.dismiss()
+                    }) {
+                        Text("작성완료")
+                            .font(.system(size: 18))
+                            .fontWeight(.heavy)
+                            .padding(.leading, 20)
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                }
+                .frame(maxWidth: 200)
+                .frame(height: 20)
                 .padding()
-                .navigationBarItems(trailing:
-                                        Button(action: {
-                    presentation.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray)
-                })
-                //.navigationBarTitle("긍정적 작성", displayMode: .inline)
+                .background(Color.blue)
+                .cornerRadius(30)
+                .shadow(radius: 10)
+                
+                Spacer()
             }
-        
+            .padding()
+            .navigationBarItems(trailing:
+                                    Button(action: {
+                presentation.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(.gray)
+            })
+        }
     }
 }
+
 
 
 // MARK: 리스트 Cell View
 struct GridItemView: View {
     
-    let index: Int
-    
-    //let goodTasks: TaskGoodData
+    let goodTasks: TaskGoodData
     
     var body: some View {
         VStack {
             HStack{
-                dateBadge()
+                dateBadge(date: goodTasks.taskGoodDate)
                 Spacer()
             }
             
             HStack{
-                titleBadge()
+                titleBadge(title: goodTasks.taskGoodTitle)
                 Spacer()
             }
             
             HStack{
-                contentBadge()
+                contentBadge(contents: goodTasks.taskGoodContent)
                 Spacer()
             }
             Spacer()
@@ -208,16 +206,19 @@ struct GridItemView: View {
     }
     
     // 날짜
-    func dateBadge() -> some View {
+    func dateBadge(date: Date) -> some View {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        let dateString = dateFormatter.string(from: date)
         
         return ZStack {
             Rectangle()
                 .frame(width: 80, height: 22)
                 .foregroundColor(Color.white.opacity(0.3))
-                //.foregroundColor(Color(hex:"#B3E5FF"))
+            //.foregroundColor(Color(hex:"#B3E5FF"))
                 .cornerRadius(10)
             
-            Text("2024.05.01")
+            Text(dateString)
                 .font(.system(size: 14))
                 .multilineTextAlignment(.center)
                 .frame(height: 22, alignment: .center)
@@ -225,11 +226,11 @@ struct GridItemView: View {
     }
     
     // 제목
-    func titleBadge() -> some View {
+    func titleBadge(title: String) -> some View {
         
         return ZStack {
             
-            Text("여기는 제목이여")
+            Text(title)
                 .multilineTextAlignment(.center)
                 .bold()
                 .frame(height: 22, alignment: .center)
@@ -237,11 +238,11 @@ struct GridItemView: View {
     }
     
     // 내용
-    func contentBadge() -> some View {
+    func contentBadge(contents: String) -> some View {
         
         return ZStack {
             
-            Text("여기는 내용입니다.")
+            Text(contents)
                 .multilineTextAlignment(.center)
                 .frame(height: 22, alignment: .center)
         }
@@ -292,7 +293,7 @@ extension Color {
         default:
             (a, r, g, b) = (255, 0, 0, 0)
         }
-
+        
         self.init(
             .sRGB,
             red: Double(r) / 255,
