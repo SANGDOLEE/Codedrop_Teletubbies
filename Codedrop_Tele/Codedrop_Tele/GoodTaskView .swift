@@ -47,7 +47,7 @@ struct GoodTaskView: View {
                                 .shadow(radius: 10)
                         }
                         .frame(maxWidth: .infinity)
-                        .frame(height: 30)
+                        .frame(height: 20)
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(30)
@@ -55,6 +55,7 @@ struct GoodTaskView: View {
                     }
                     .sheet(isPresented: self.$showModal) {
                         ModalView()
+                            .background(.gray)
                     }
                     .padding()
                 }
@@ -68,20 +69,72 @@ struct GoodTaskView: View {
 
 // MARK: Task 작성 뷰
 struct ModalView: View {
+    
     @Environment(\.presentationMode) var presentation
     
+    @State private var title: String = ""
+    @State private var content: String = ""
+    
     var body: some View {
-        VStack {
-            Text("Modal view 등장")
-            Button(action: {
-                presentation.wrappedValue.dismiss()
-            }) {
-                Text("Modal view 닫기").bold()
+        
+        ZStack {
+            Color.gray
+                .edgesIgnoringSafeArea(.all) // Gray background
+            
+            NavigationView {
+                VStack {
+                    HStack {
+                        Text("긍정적 작성")
+                        Spacer()
+                    }
+                    
+                    HStack{
+                        Text("제목")
+                            .padding()
+                        
+                        TextField("제목을 입력해주세요.", text: $title)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.trailing)
+                    }
+                    
+                    TextEditor(text: $content)
+                        .frame(height: 200)
+                        .padding()
+                        .border(Color.gray, width: 3)
+                        .cornerRadius(8)
+                    
+                    HStack {
+                        Button(action: {
+                            // 저장 액션 등 필요한 로직 구현
+                            presentation.wrappedValue.dismiss()
+                        }) {
+                            Text("작성완료")
+                                .font(.system(size: 18))
+                                .fontWeight(.heavy)
+                                .padding(.leading, 20)
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 20)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                    .shadow(radius: 10)
+                    
+                    Spacer()
+                }
+                .padding()
+                .navigationBarItems(trailing:
+                                        Button(action: {
+                    presentation.wrappedValue.dismiss()
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                })
+                //.navigationBarTitle("긍정적 작성", displayMode: .inline)
             }
-            .frame(width: 150, height: 30, alignment: .center)
-            .background(RoundedRectangle(cornerRadius: 40)) // 이 부분의 괄호를 추가해야 합니다.
-            .font(.system(size: 16))
-            .foregroundColor(Color.white)
         }
     }
 }
