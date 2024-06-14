@@ -5,6 +5,7 @@
 //  Created by hanseoyoung on 6/15/24.
 //
 
+import Foundation
 import GoogleGenerativeAI
 
 let config = GenerationConfig(
@@ -14,12 +15,6 @@ let config = GenerationConfig(
   maxOutputTokens: 8192,
   responseMIMEType: "text/plain"
 )
-
-//guard let apiKey = ProcessInfo.processInfo.environment["AIzaSyD3B3jaX8SV74chPkPPgpcAQ9pYqIrcdLw"] else {
-//  fatalError("Add GEMINI_API_KEY as an Environment Variable in your app's scheme.")
-//}
-
-//let apiKey = "AIzaSyD3B3jaX8SV74chPkPPgpcAQ9pYqIrcdLw"
 
 enum APIKey {
     static var `default`: String {
