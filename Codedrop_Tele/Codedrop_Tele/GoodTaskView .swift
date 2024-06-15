@@ -263,14 +263,14 @@ struct ModalView: View {
                             self.progress = 0.0
                             self.showGridItemView = true
                             self.maxProgress += 1.0
-                            
                         }
-                        
                         self.presentation.wrappedValue.dismiss()
                     }) {
                         Text("작성완료")
                             .font(.system(size: 17, weight: .heavy))
                             .foregroundColor(.white)
+                            .padding()
+                            .padding(.horizontal, 35)
                     }
                     .padding()
                 }
@@ -279,7 +279,7 @@ struct ModalView: View {
                 .padding()
                 .background(Color(UIColor.systemGreen))
                 .cornerRadius(30)
-                .shadow(radius: 10)
+                .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
                 
                 Spacer()
             }

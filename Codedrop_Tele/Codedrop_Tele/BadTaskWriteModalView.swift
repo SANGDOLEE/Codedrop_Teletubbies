@@ -68,7 +68,7 @@ struct BadTaskWriteModalView: View {
                 }
             }
             .padding(.all, 20)
-            .shadow(radius: 10)
+            .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
 
             Spacer()
         }
