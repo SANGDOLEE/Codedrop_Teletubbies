@@ -5,11 +5,22 @@ struct TabbarControlView: View {
         TabView {
             GoodTaskView()
                 .tabItem {
-                    Label("Good", systemImage: "house")
+                    VStack {
+                        Image("Worky")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .aspectRatio(contentMode: .fit)
+                        Text("워키비키")
+                    }
                 }
             BadTaskView()
                 .tabItem {
-                    Label("Bad", systemImage: "house")
+                    VStack {
+                        Image("Lucky")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                        Text("럭키비키")
+                    }
                 }
         }
     }

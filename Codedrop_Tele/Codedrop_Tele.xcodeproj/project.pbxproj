@@ -24,6 +24,8 @@
 		BD279C922C1CC38A009BAEC8 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C912C1CC38A009BAEC8 /* DataExtension.swift */; };
 		BD279C942C1CCB74009BAEC8 /* DetailBadTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */; };
 		BD279C962C1CDFF9009BAEC8 /* BadTaskWriteModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C952C1CDFF9009BAEC8 /* BadTaskWriteModalView.swift */; };
+		BD279C982C1D1D2C009BAEC8 /* Lucky.png in Resources */ = {isa = PBXBuildFile; fileRef = BD279C972C1D1D2C009BAEC8 /* Lucky.png */; };
+		BD279C9B2C1D1D65009BAEC8 /* Worky.png in Resources */ = {isa = PBXBuildFile; fileRef = BD279C9A2C1D1D65009BAEC8 /* Worky.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		BD279C912C1CC38A009BAEC8 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
 		BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBadTaskView.swift; sourceTree = "<group>"; };
 		BD279C952C1CDFF9009BAEC8 /* BadTaskWriteModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadTaskWriteModalView.swift; sourceTree = "<group>"; };
+		BD279C972C1D1D2C009BAEC8 /* Lucky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lucky.png; sourceTree = "<group>"; };
+		BD279C9A2C1D1D65009BAEC8 /* Worky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Worky.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,8 @@
 				BD279C8D2C1CAA39009BAEC8 /* GenerativeAI-Info.plist */,
 				1F3B060B2C1CD94B00A0D3C5 /* Lockicons.png */,
 				1F3B05F42C1C74E100A0D3C5 /* Assets.xcassets */,
+				BD279C9A2C1D1D65009BAEC8 /* Worky.png */,
+				BD279C972C1D1D2C009BAEC8 /* Lucky.png */,
 				1F3B05F62C1C74E100A0D3C5 /* Preview Content */,
 			);
 			path = Codedrop_Tele;
@@ -172,6 +178,8 @@
 			files = (
 				1F3B05F82C1C74E100A0D3C5 /* Preview Assets.xcassets in Resources */,
 				1F3B05F52C1C74E100A0D3C5 /* Assets.xcassets in Resources */,
+				BD279C9B2C1D1D65009BAEC8 /* Worky.png in Resources */,
+				BD279C982C1D1D2C009BAEC8 /* Lucky.png in Resources */,
 				1F3B060C2C1CD94B00A0D3C5 /* Lockicons.png in Resources */,
 				BD279C8E2C1CAA39009BAEC8 /* GenerativeAI-Info.plist in Resources */,
 			);

@@ -75,15 +75,15 @@ struct BadTaskView: View {
                         Button(action: {
                             showModal = true
                         }, label: {
-                            Text("오늘의 럭키비키 쓰러가기")
+                            Text("럭키비키 쓰러가기")
                                 .font(.system(size: 17, weight: .heavy))
-                                .padding(.horizontal, 33)
+                                .padding(.horizontal, 58)
                                 .padding(.vertical, 16)
-                                .background(.green)
+                                .background(Color(UIColor.systemGreen))
                                 .foregroundColor(.white)
                                 .cornerRadius(30)
+                                .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
                         })
-                        .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
                         .padding(EdgeInsets(top: 65, leading: 77, bottom: 43, trailing: 77))
                     }
 
