@@ -26,7 +26,7 @@ struct BadTaskWriteModalView: View {
                 Text("오늘 일하면서 \n힘들었던 일이 있나요?")
                     .font(.system(size: 28))
                     .padding(.horizontal, 18)
-                    .padding(.top, 74)
+                    .padding(.top, 16)
                     .padding(.bottom, 20)
                 Spacer()
             }
