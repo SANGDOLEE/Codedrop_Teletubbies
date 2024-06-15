@@ -317,6 +317,7 @@ struct GridItemView: View {
     
     let goodTasks: TaskGoodData
     @State private var usedEmojis: Set<String> = []
+    private let emojis = ["☘️", "🦖", "🌱","💚"]
     
     // Function to generate a random color
     func randomColor() -> Color {
@@ -400,27 +401,23 @@ struct GridItemView: View {
     }
     
     // 축하뱃지
-    func emojiBadge() -> some View {
-          let emojis = ["☘️","🦖","🌱"]
-          var availableEmojis = emojis.filter { !usedEmojis.contains($0) }
-          
-          if availableEmojis.isEmpty {
-              // If all emojis have been used, reset the set
-              usedEmojis.removeAll()
-              availableEmojis = emojis
-          }
-          
-          let randomEmoji = availableEmojis.randomElement() ?? "☘️"
-          usedEmojis.insert(randomEmoji)
-          
-          return ZStack {
-              Text(randomEmoji)
-                  .font(.system(size: 60))
-                  .multilineTextAlignment(.center)
-                  .frame(height: 22, alignment: .center)
-                  .padding(.bottom)
-          }
-      }
+     func emojiBadge() -> some View {
+         var emojisToUse = emojis.shuffled()
+         
+         if emojisToUse.isEmpty {
+             emojisToUse = emojis.shuffled()
+         }
+         
+         let randomEmoji = emojisToUse.removeLast()
+         
+         return ZStack {
+             Text(randomEmoji)
+                 .font(.system(size: 60))
+                 .multilineTextAlignment(.center)
+                 .frame(height: 22, alignment: .center)
+                 .padding(.bottom)
+         }
+     }
 }
 
 // MARK: Lock Cell View
