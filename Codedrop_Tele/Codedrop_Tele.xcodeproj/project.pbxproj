@@ -23,10 +23,7 @@
 		BD279C902C1CAC5A009BAEC8 /* AITestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C8F2C1CAC5A009BAEC8 /* AITestView.swift */; };
 		BD279C922C1CC38A009BAEC8 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C912C1CC38A009BAEC8 /* DataExtension.swift */; };
 		BD279C942C1CCB74009BAEC8 /* DetailBadTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */; };
-
-
 		BD279C962C1CDFF9009BAEC8 /* BadTaskWriteModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279C952C1CDFF9009BAEC8 /* BadTaskWriteModalView.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,10 +43,7 @@
 		BD279C8F2C1CAC5A009BAEC8 /* AITestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITestView.swift; sourceTree = "<group>"; };
 		BD279C912C1CC38A009BAEC8 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
 		BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBadTaskView.swift; sourceTree = "<group>"; };
-
-
 		BD279C952C1CDFF9009BAEC8 /* BadTaskWriteModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadTaskWriteModalView.swift; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,18 +84,13 @@
 				1F3B05F22C1C74E000A0D3C5 /* TabbarControlView.swift */,
 				1F3B05FE2C1C752400A0D3C5 /* GoodTaskView .swift */,
 				1F3B06002C1C752D00A0D3C5 /* BadTaskView.swift */,
-
-				1F3B060B2C1CD94B00A0D3C5 /* Lockicons.png */,
-
 				BD279C932C1CCB74009BAEC8 /* DetailBadTaskView.swift */,
 				BD279C8B2C1CA6D9009BAEC8 /* AIModel.swift */,
 				BD279C8F2C1CAC5A009BAEC8 /* AITestView.swift */,
 				BD279C912C1CC38A009BAEC8 /* DataExtension.swift */,
 				BD279C952C1CDFF9009BAEC8 /* BadTaskWriteModalView.swift */,
 				BD279C8D2C1CAA39009BAEC8 /* GenerativeAI-Info.plist */,
-
 				1F3B060B2C1CD94B00A0D3C5 /* Lockicons.png */,
-
 				1F3B05F42C1C74E100A0D3C5 /* Assets.xcassets */,
 				1F3B05F62C1C74E100A0D3C5 /* Preview Content */,
 			);
@@ -340,7 +329,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Codedrop_Tele/Preview Content\"";
-				DEVELOPMENT_TEAM = WTK65UP9RZ;
+				DEVELOPMENT_TEAM = AZ7B294WMJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -369,7 +358,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Codedrop_Tele/Preview Content\"";
-				DEVELOPMENT_TEAM = WTK65UP9RZ;
+				DEVELOPMENT_TEAM = AZ7B294WMJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

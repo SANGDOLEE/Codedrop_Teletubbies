@@ -82,7 +82,7 @@ struct BadTaskView: View {
                                 .foregroundColor(.white)
                                 .cornerRadius(30)
                         })
-                        .shadow(radius: 10)
+                        .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
                         .padding(EdgeInsets(top: 65, leading: 77, bottom: 43, trailing: 77))
                     }
 
@@ -91,7 +91,7 @@ struct BadTaskView: View {
                 BadTaskWriteModalView(showModal: $showModal)
             }
         }
-        .padding(16)
+//        .padding(16)
     }
 }
 
