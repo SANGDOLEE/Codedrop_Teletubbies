@@ -14,7 +14,8 @@ struct BadTaskView: View {
                 Text("이거 완전 럭키비키잖아?")
                     .foregroundColor(.black)
                     .font(.system(size: 22, weight: .bold))
-                
+                    .padding(16)
+
                 Spacer()
             }
 
