@@ -60,7 +60,7 @@ struct BadTaskWriteModalView: View {
                     Text(isLoading ? "로딩중..." : "작성완료")
                         .font(.system(size: 18))
                         .fontWeight(.heavy)
-                        .padding(.horizontal, 50)
+                        .padding(.horizontal, 80)
                         .padding(.vertical, 14)
                         .foregroundColor(.white)
                         .background(Color.green)

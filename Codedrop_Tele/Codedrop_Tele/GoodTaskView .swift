@@ -267,7 +267,7 @@ struct ModalView: View {
                         self.presentation.wrappedValue.dismiss()
                     }) {
                         Text("작성완료")
-                            .font(.system(size: 17, weight: .heavy))
+                            .font(.system(size: 18, weight: .heavy))
                             .foregroundColor(.white)
                             .padding()
                             .padding(.horizontal, 35)
