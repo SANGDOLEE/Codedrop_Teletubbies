@@ -117,8 +117,7 @@ struct GoodTaskView: View {
                                 .background(Color(UIColor.systemGreen))
                                 .foregroundColor(.white)
                                 .cornerRadius(30)
-                                .shadow(radius: 10)
-//                                .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5) // Shadow with offset
+                                .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4) // Shadow with offset
                             
                         })
                         .padding(EdgeInsets(top: 65, leading: 50, bottom: 43, trailing: 50))
@@ -136,7 +135,7 @@ struct GoodTaskView: View {
                 CustomAlertView(isPresented: $isAlertPresented, goodTasks: task)
             }
         }
-        .padding(16)
+        //.padding(16)
         
     }
     
@@ -160,7 +159,7 @@ struct CustomAlertView: View {
             
             VStack {
                 VStack {
-                    Text("🎉")
+                    Text("☘️")
                         .font(.system(size: 100))
                         .padding(.bottom, 20)
                     
@@ -317,6 +316,7 @@ struct CustomProgressView: View {
 struct GridItemView: View {
     
     let goodTasks: TaskGoodData
+    @State private var usedEmojis: Set<String> = []
     
     // Function to generate a random color
     func randomColor() -> Color {
@@ -401,19 +401,26 @@ struct GridItemView: View {
     
     // 축하뱃지
     func emojiBadge() -> some View {
-        //        let emojis = ["🎉", "❤️‍🔥", "🌟", "🐶", "🎈", "🥇", "🌺","🎁","🧸"]
-        
-        //        let randomEmoji = emojis.randomElement() ?? "🎉"
-        
-        return ZStack {
-            Text("🎉")
-                .font(.system(size: 60))
-                .multilineTextAlignment(.center)
-                .frame(height: 22, alignment: .center)
-                .padding(.bottom)
-        }
-    }
-    
+          let emojis = ["☘️","🦖","🌱"]
+          var availableEmojis = emojis.filter { !usedEmojis.contains($0) }
+          
+          if availableEmojis.isEmpty {
+              // If all emojis have been used, reset the set
+              usedEmojis.removeAll()
+              availableEmojis = emojis
+          }
+          
+          let randomEmoji = availableEmojis.randomElement() ?? "☘️"
+          usedEmojis.insert(randomEmoji)
+          
+          return ZStack {
+              Text(randomEmoji)
+                  .font(.system(size: 60))
+                  .multilineTextAlignment(.center)
+                  .frame(height: 22, alignment: .center)
+                  .padding(.bottom)
+          }
+      }
 }
 
 // MARK: Lock Cell View
